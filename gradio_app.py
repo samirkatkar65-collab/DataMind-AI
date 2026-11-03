@@ -19,6 +19,8 @@ def analyze_business(file):
         df["Sales"] = pd.to_numeric(df["Sales"], errors="coerce")
         df["Expenses"] = pd.to_numeric(df["Expenses"], errors="coerce")
         df = df.dropna(subset=["Sales", "Expenses"])
+        if (df[["Sales", "Expenses"]] < 0).any().any():
+         return "Invalid data: Sales and Expenses cannot contain negative values.", None
 
         if df.empty:
             return "No valid business records found.", None
